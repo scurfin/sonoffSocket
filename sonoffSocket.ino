@@ -21,8 +21,10 @@
 	//Your MQTT Broker
 	const char* mqtt_server = "your mqtt broker";
 	const char* mqtt_in_topic = "socket/switch/set";
-  const char* mqtt_out_topic = "socket/switch/status";
-	
+  	const char* mqtt_out_topic = "socket/switch/status";
+	//Option for connection with password protected broker, if not protected, leave user and password blank
+	const char* mqtt_user = "your_username";
+	const char* mqtt_password = "your_password";	
 #endif
 
 
@@ -251,7 +253,8 @@ void MqttReconnect() {
 
   while (!client.connected()) {
     Serial.print("Connect to MQTT-Broker");
-    if (client.connect(clientID.c_str())) {
+    if (client.connect(clientID.c_str(), mqtt_user, mqtt_password)) {
+	    //Option for connection with password protected broker, if not protected, leave user and password empty
       Serial.print("connected as clientID:");
       Serial.println(clientID);
       //publish ready
