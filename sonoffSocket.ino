@@ -6,7 +6,7 @@
 #include <Ticker.h>
 
 //To use MQTT, install Library "PubSubClient" and switch next line to 1
-#define USE_MQTT 0
+#define USE_MQTT 1
 //If you don`t want to use local button switch to 0
 #define USE_LOCAL_BUTTON 1
 
@@ -271,13 +271,15 @@ void MqttStatePublish() {
   if (relais == 1 and not status_mqtt)
      {
       status_mqtt = relais;
-      client.publish(mqtt_out_topic, "on");
+      client.publish(mqtt_out_topic, "1", true);
+	  //true for retain message
       Serial.println("MQTT publish: on");
      }
   if (relais == 0 and status_mqtt)
      {
       status_mqtt = relais;
-      client.publish(mqtt_out_topic, "off");
+      client.publish(mqtt_out_topic, "0", true);
+	  //true for retain message
       Serial.println("MQTT publish: off");
      }
 }
